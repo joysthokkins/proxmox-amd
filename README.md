@@ -1,7 +1,7 @@
 # proxmox-amd
-# Asrock x570 itx/tb3 + 5950x + Vega 64 + eGPU Vega 56
+## Asrock x570 itx/tb3 + 5950x + Vega 64 + eGPU Vega 56
 
-UEFI:
+## UEFI:
 Enable VT-d
 Disable CSM
 ACS Enable
@@ -9,30 +9,30 @@ Enable 4G Decoding
 Disable Resizable BAR
 Enable IOMMU
 
-MERGING PROXMOX PARTITIONS
+## MERGING PROXMOX PARTITIONS
 lvremove /dev/pve/data
 lvresize -l +100%FREE /dev/pve/root
 resize2fs /dev/mapper/pve-root
 
-GPU PASSTHROUGH WITH eGPU
+## GPU PASSTHROUGH WITH eGPU
 nano /etc/default/grub
 GRUB_CMDLINE_LINUX_DEFAULT="quiet iommu=pt pcie_ports=native pci=assign-busses,nocrs,realloc"
 update-grub
 
-FIX WEBUI:
+## FIX WEBUI (When PCIe ADDed):
 ip a
 
 nano /etc/network/interfaces
 replace the iface and bridge-ports line
 
-ADD MODULES
+## ADD MODULES
 nano /etc/modules
 vendor-reset
 vfio
 vfio_iommu_type1
 vfio_pci
 
-VFIO
+## VFIO
 nano /etc/modprobe.d/vfio-pci.conf
 softdep amdgpu pre: vfio-pci
 softdep radeon pre: vfio-pci
@@ -40,7 +40,7 @@ softdep snd_hda_intel pre: vfio-pci
 softdep xhci_pci pre: vfio-pci
 options vfio-pci ids=1002:687f disable_vga=1
 
-KVM
+## KVM
 nano /etc/modprobe.d/kvm.conf
 options kvm ignore_msrs=1 report_ignored_msrs=0
 
@@ -60,7 +60,7 @@ echo "vendor-reset" >> /etc/modules
 VENDOR-RESET BOOT FIX HOOKSCRIPT
 Main GPU
 
-eGPU
+## eGPU
 #!/bin/bash
 GPU='0000:0b:00.0'
 [ "$2" == "pre-start" ] && echo device_specific >"/sys/bus/pci/devices/${GPU}/reset_method"
@@ -69,15 +69,7 @@ Windows 11
 
 code 43 error: machine: pc-q35-6.2
 
-POWER SAVING MODE
-
-https://www.reddit.com/r/homelab/comments/ukkpjj/ryzen_3000_and_5000_series_optimizing_power_usage/
-
-Enable ECO Mode (I have a 3000 series and I think this does more on Ryzen 5000, but I turned it on anyway).
-
-Disable Precision Boost Overclock.
-
-Disable Global C-States.
+## POWER SAVING MODE
 
 cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
 performance
@@ -104,6 +96,6 @@ WantedBy=multi-user.target
 systemctl enable power-saving
 
 
-# FIX BLUETOOTH
+## FIX BLUETOOTH
 
 Bluetooolfixup v2.6.8
