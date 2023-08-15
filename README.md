@@ -1,5 +1,5 @@
 # proxmox-amd
-#Asrock x570 itx/tb3 + 5950x + Vega 64 + eGPU Vega 56
+# Asrock x570 itx/tb3 + 5950x + Vega 64 + eGPU Vega 56
 
 UEFI:
 Enable VT-d
@@ -104,6 +104,6 @@ WantedBy=multi-user.target
 systemctl enable power-saving
 
 
-#FIX BLUETOOTH
+# FIX BLUETOOTH
 
 Bluetooolfixup v2.6.8
