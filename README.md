@@ -1,5 +1,4 @@
-# proxmox-amd
-## Asrock x570 itx/tb3 + 5950x + Vega 64 + eGPU Vega 56
+## PROXMOX Asrock x570 itx/tb3 + 5950x + Vega 64 + eGPU Vega 56 (Ubuntu/MacOS/Win11)
 
 ## UEFI:
 Enable VT-d
